@@ -25,7 +25,11 @@ const PurchaseProducts = ({ updateProducts }) => {
       return;
     }
 
-    setChart([...chart, { ...selectedProduct, quantidade: selectedProductQuantity }]);
+    const newChart = chart.filter(product => product.id !== selectedProduct.id);
+    const currentProduct = chart.find(product => product.id === selectedProduct.id);
+    const currentQuantity = currentProduct && currentProduct.quantidade || 0;
+
+    setChart([...newChart, { ...selectedProduct, quantidade: currentQuantity + parseInt(selectedProductQuantity) }]);
     setSelectedProduct(null);
     setSelectedProductQuantity(1);
   }
