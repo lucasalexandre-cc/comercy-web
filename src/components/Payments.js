@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { TextField, Button } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
+import axios from "axios";
 
 import { styled } from "styles";
 import PaymentsMoney from "./PaymentsMoney";
@@ -15,6 +16,16 @@ const Payments = () => {
   useEffect(() => {
     setPaymentForm(null);
   }, [paymentMethod]);
+
+  async function submitPurchase() {
+    try {
+      const response = await axios.post('http://ec2-35-171-186-84.compute-1.amazonaws.com:8080/', paymentForm);
+
+
+    } catch (e) {
+      alert("Erro no pagamento.");
+    }
+  }
 
   return (
     <>
@@ -38,6 +49,7 @@ const Payments = () => {
       {paymentMethod &&
         <CustomButton
           variant="contained"
+          onClick={() => submitPurchase()}
         >
           Finalizar compra
         </CustomButton>

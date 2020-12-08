@@ -1,10 +1,15 @@
 import React from "react";
 
 import ClientProvider from "./ClientProvider";
+import ItemProvider from "./ItemProvider";
 
 function RootProviders({ children }) {
   return (
-    <ClientProvider>{children}</ClientProvider>
+    <ClientProvider>
+      <ItemProvider>
+        {children}
+      </ItemProvider>
+    </ClientProvider>
   );
 }
 

@@ -3,15 +3,21 @@ import { TextField, Button } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 
 import { styled } from "styles";
+import { useItemContext } from "providers/ItemProvider";
 
 const PurchaseProducts = ({ updateProducts }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedProductQuantity, setSelectedProductQuantity] = useState(1);
-  const [products, setProducts] = useState([]);
+  const [chart, setChart] = useState([]);
+  const { items, loadItems } = useItemContext();
 
   useEffect(() => {
-    updateProducts(products);
-  }, [products, updateProducts]);
+    if (!items || items.length === 0) loadItems();
+  }, []);
+
+  useEffect(() => {
+    updateProducts(chart);
+  }, [chart, updateProducts]);
 
   function addNewProduct() {
     if (!selectedProduct) {
@@ -19,7 +25,7 @@ const PurchaseProducts = ({ updateProducts }) => {
       return;
     }
 
-    setProducts([...products, { ...selectedProduct, quantity: selectedProductQuantity }]);
+    setChart([...chart, { ...selectedProduct, quantidade: selectedProductQuantity }]);
     setSelectedProduct(null);
     setSelectedProductQuantity(1);
   }
@@ -30,10 +36,10 @@ const PurchaseProducts = ({ updateProducts }) => {
       <Inline>
         <Autocomplete
           style={{ width: 300 }}
-          options={allProducts}
+          options={items}
           value={selectedProduct}
           onChange={(_, newValue) => setSelectedProduct(newValue)}
-          getOptionLabel={(product) => product.name}
+          getOptionLabel={(item) => item.descricao}
           renderInput={(params) => (
             <TextField {...params} label="Escolha o produto" variant="outlined" margin="normal" />
           )}
@@ -57,31 +63,24 @@ const PurchaseProducts = ({ updateProducts }) => {
           </>
         }
       </Inline>
-      {products.map((product, index) => (
+      {chart.map((product, index) => (
         <Product key={index}>
-          {product.name} - Unidades: {product.quantity} - Valor: R$ {calculatePrice(product)}
+          {product.descricao} - Unidades: {product.quantidade} - Valor: R$ {calculatePrice(product)}
         </Product>
       ))}
-      {products.length > 0 && <Total>Total: {calculateTotalPrice(products)}</Total>}
+      {chart.length > 0 && <Total>Total: {calculateTotalPrice(chart)}</Total>}
     </>
   )
 };
 
-// TO-DO get products from backend
-const allProducts = [
-  { id: 1, name: 'Camisa 1 Flamengo', price: 199.90 },
-  { id: 2, name: 'Camisa 2 Flamengo', price: 149.90 },
-  { id: 3, name: 'Short 1 Flamengo', price: 99.90 },
-];
-
 function calculatePrice(product) {
-  const result = parseFloat(product.price) * parseInt(product.quantity);
-  return result.toFixed(2);
+  const result = parseFloat(product.preco) * parseInt(product.quantidade);
+  return (result / 100).toFixed(2);
 }
 
 function calculateTotalPrice(products) {
-  const result = products.reduce((total, product) => total + parseFloat(calculatePrice(product)), 0);
-  return result.toFixed(2);
+  const result = products.reduce((total, product) => total + parseInt(calculatePrice(product)), 0);
+  return (result).toFixed(2);
 }
 
 const StepTitle = styled.h1`
