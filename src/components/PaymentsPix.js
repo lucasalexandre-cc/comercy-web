@@ -9,7 +9,8 @@ const PaymentsPix = ({ afterUpdateForm }) => {
 
   return (
     <>
-      <Key>Chave do PIX: loja@gmail.com</Key>
+      <Key>Chave do PIX 01: loja@gmail.com</Key>
+      <Key>Chave do PIX 02: 21111111111</Key>
     </>
   )
 };

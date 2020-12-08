@@ -6,6 +6,7 @@ import { styled } from "styles";
 import PaymentsMoney from "./PaymentsMoney";
 import PaymentsPix from "./PaymentsPix";
 import PaymentsCreditCard from "./PaymentsCreditCard";
+import PaymentsDebitCard from "./PaymentDebitCard";
 
 const Payments = () => {
   const [paymentMethod, setPaymentsMethod] = useState(null);
@@ -32,8 +33,9 @@ const Payments = () => {
       {paymentMethod && paymentMethod.id === 1 && <PaymentsMoney afterUpdateForm={setPaymentForm} />}
       {paymentMethod && paymentMethod.id === 2 && <PaymentsPix afterUpdateForm={setPaymentForm} />}
       {paymentMethod && paymentMethod.id === 3 && <PaymentsCreditCard afterUpdateForm={setPaymentForm} />}
+      {paymentMethod && paymentMethod.id === 4 && <PaymentsDebitCard afterUpdateForm={setPaymentForm} />}
 
-      {paymentForm &&
+      {paymentMethod &&
         <CustomButton
           variant="contained"
         >
