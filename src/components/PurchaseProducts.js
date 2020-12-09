@@ -13,7 +13,7 @@ const PurchaseProducts = ({ updateProducts }) => {
 
   useEffect(() => {
     if (!items || items.length === 0) loadItems();
-  }, []);
+  }, [items, loadItems]);
 
   useEffect(() => {
     updateProducts(chart);
