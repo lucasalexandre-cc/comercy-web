@@ -19,7 +19,7 @@ const GeneratePurchase = () => {
         return { ...current, [product.codigoDeBarras]: product.quantidade }
       }, {});
 
-      const response = await axios.post('http://ec2-35-171-186-84.compute-1.amazonaws.com:8080/venda', {
+      const response = await axios.post('http://ec2-54-196-127-32.compute-1.amazonaws.com:8080/venda', {
         idCliente: client.id,
         itens,
         pagamento: {

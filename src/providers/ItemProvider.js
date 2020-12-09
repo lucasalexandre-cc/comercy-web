@@ -8,7 +8,7 @@ const ItemProvider = (props) => {
 
   async function loadItems() {
     try {
-      const response = await axios.get('http://ec2-35-171-186-84.compute-1.amazonaws.com:8080/item');
+      const response = await axios.get('http://ec2-54-196-127-32.compute-1.amazonaws.com:8080/item');
       setItems(response.data);
     } catch (e) {
       alert("Erro ao carregar os itens");
