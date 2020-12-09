@@ -9,6 +9,7 @@ const ClientProvider = (props) => {
     // TO-DO call backend to find client by cpf
 
     const defaultClient = {
+      id: '111',
       name: "Giorgian De Arrascaeta",
       email: "giorgian@framengo.com.br",
       address: "Barra da Tijuca, RJ",

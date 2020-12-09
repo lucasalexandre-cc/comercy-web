@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { TextField, Button } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
-import axios from "axios";
 
 import { styled } from "styles";
 import PaymentsMoney from "./PaymentsMoney";
@@ -9,23 +8,13 @@ import PaymentsPix from "./PaymentsPix";
 import PaymentsCreditCard from "./PaymentsCreditCard";
 import PaymentsDebitCard from "./PaymentDebitCard";
 
-const Payments = () => {
+const Payments = ({ submitPayment }) => {
   const [paymentMethod, setPaymentsMethod] = useState(null);
   const [paymentForm, setPaymentForm] = useState(null);
 
   useEffect(() => {
     setPaymentForm(null);
   }, [paymentMethod]);
-
-  async function submitPurchase() {
-    try {
-      const response = await axios.post('http://ec2-35-171-186-84.compute-1.amazonaws.com:8080/', paymentForm);
-
-
-    } catch (e) {
-      alert("Erro no pagamento.");
-    }
-  }
 
   return (
     <>
@@ -49,7 +38,7 @@ const Payments = () => {
       {paymentMethod &&
         <CustomButton
           variant="contained"
-          onClick={() => submitPurchase()}
+          onClick={() => submitPayment({ ...paymentForm, paymentMethod })}
         >
           Finalizar compra
         </CustomButton>
@@ -59,10 +48,10 @@ const Payments = () => {
 };
 
 const allPaymentMethod = [
-  { id: 1, name: 'Dinheiro' },
-  { id: 2, name: 'Pix' },
-  { id: 3, name: 'Cartão de Crédito' },
-  { id: 4, name: 'Cartão de Débito' }
+  { id: 1, name: 'Dinheiro', key: 'dinheiro' },
+  { id: 2, name: 'Pix', key: 'pix' },
+  { id: 3, name: 'Cartão de Crédito', key: 'credito' },
+  { id: 4, name: 'Cartão de Débito', key: 'debito' }
 ];
 
 const StepTitle = styled.h1`
